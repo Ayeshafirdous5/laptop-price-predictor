@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Laptop Price Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            display: inline-block;
+            text-align: left;
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        label, select, input {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        .center {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Laptop Price Predictor</h1>
+    <div class="container">
+        <form method="POST">
+            <label>Company:</label>
+            <select name="company">
+                {% for c in companies %}
+                <option value="{{ c }}" {% if request.form.company == c %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Type:</label>
+            <select name="typename">
+                {% for t in typenames %}
+                <option value="{{ t }}" {% if request.form.typename == t %}selected{% endif %}>{{ t }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Inches:</label>
+            <input type="text" name="inches" value="{{ request.form.inches or '' }}">
+
+            <label>Touchscreen:</label>
+            <select name="touchscreen">
+                <option value="Yes" {% if request.form.touchscreen == 'Yes' %}selected{% endif %}>Yes</option>
+                <option value="No" {% if request.form.touchscreen == 'No' %}selected{% endif %}>No</option>
+            </select>
+
+            <label>IPS:</label>
+            <select name="ips">
+                <option value="Yes" {% if request.form.ips == 'Yes' %}selected{% endif %}>Yes</option>
+                <option value="No" {% if request.form.ips == 'No' %}selected{% endif %}>No</option>
+            </select>
+
+            <label>Resolution:</label>
+            <input type="text" name="resolution" value="{{ request.form.resolution or '' }}">
+
+            <label>CPU:</label>
+            <select name="cpu">
+                {% for c in cpus %}
+                <option value="{{ c }}" {% if request.form.cpu == c %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+
+            <label>RAM (GB):</label>
+            <select name="ram">
+                {% for r in rams %}
+                <option value="{{ r }}" {% if request.form.ram == r %}selected{% endif %}>{{ r }}</option>
+                {% endfor %}
+            </select>
+
+            <label>GPU:</label>
+            <select name="gpu">
+                {% for g in gpus %}
+                <option value="{{ g }}" {% if request.form.gpu == g %}selected{% endif %}>{{ g }}</option>
+                {% endfor %}
+            </select>
+
+            <label>OS:</label>
+            <select name="os">
+                {% for o in oses %}
+                <option value="{{ o }}" {% if request.form.os == o %}selected{% endif %}>{{ o }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Weight:</label>
+            <input type="text" name="weight" value="{{ request.form.weight or '' }}">
+
+            <label>HDD (GB):</label>
+            <select name="hdd">
+                {% for s in storages %}
+                <option value="{{ s }}" {% if request.form.hdd == s %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+
+            <label>SSD (GB):</label>
+            <select name="ssd">
+                {% for s in storages %}
+                <option value="{{ s }}" {% if request.form.ssd == s %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+
+            <label><input type="checkbox" name="hybrid" {% if request.form.hybrid %}checked{% endif %}> Hybrid</label>
+            <label><input type="checkbox" name="flash" {% if request.form.flash %}checked{% endif %}> Flash Storage</label>
+
+            <div style="margin-top: 10px;">
+                <input type="submit" value="Predict">
+                <a href="/" style="text-decoration: none;">
+                    <button type="button">Clear</button>
+                </a>
+            </div>
+        </form>
+    </div>
+
+    {% if prediction %}
+    <div class="center">
+        <h2>Predicted Price: ₹{{ prediction }}</h2>
+    </div>
+    {% endif %}
+</body>
+</html>
+
+
+
