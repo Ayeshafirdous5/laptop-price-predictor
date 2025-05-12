@@ -60,11 +60,7 @@ def index():
                            oses=oses,
                            rams=rams,
                            storages=storages,
-                           prediction=prediction)
+    prediction=prediction)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-         
