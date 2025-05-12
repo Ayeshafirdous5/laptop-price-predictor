@@ -74,5 +74,5 @@ pickle
 
 
 📬 Contact
-For queries or feedback, contact: ayeshafirdous05@gmail.com
+For queries or feedback, contact: ayeshafirdous0509@gmail.com
 
