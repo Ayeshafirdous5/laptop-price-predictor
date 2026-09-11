@@ -264,10 +264,6 @@ Through this project, I gained practical experience in:
 
 Computer Science Engineering Student
 
-Aspiring Data Analyst
-
-GitHub: [Ayeshafirdous5](https://github.com/Ayeshafirdous5)
-
 ---
 
 ## ⭐ Conclusion
