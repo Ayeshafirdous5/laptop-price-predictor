@@ -165,7 +165,7 @@ LaptopPricePrediction/
 └── README.md
 ```
 
-Legacy artifacts kept for provenance but **not used by the application**: the root-level `laptop_price_model.pkl` (superseded by `models/laptop_price_pipeline.pkl`) and the `main.ipynb/` scratch directory (superseded by `notebooks/laptop_price_analysis.ipynb`).
+Legacy artifacts from earlier revisions (a root-level `laptop_price_model.pkl` superseded by `models/laptop_price_pipeline.pkl`, and a `main.ipynb/` scratch directory superseded by `notebooks/laptop_price_analysis.ipynb`) have been removed from the current repository; the application uses only `models/laptop_price_pipeline.pkl`.
 
 ## Limitations and responsible use
 
