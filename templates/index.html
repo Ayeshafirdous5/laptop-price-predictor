@@ -3,126 +3,381 @@
 <head>
     <title>Laptop Price Predictor</title>
     <style>
+        :root {
+            --page-bg: #edf0f4;
+            --card: #ffffff;
+            --ink: #1f2937;
+            --muted: #5d6875;
+            --line: #dbe1e8;
+            --accent: #1d4ed8;
+            --accent-dark: #163fae;
+            --danger: #a41226;
+            --danger-bg: #fdecea;
+            --focus: #b45309;
+            --radius: 14px;
+        }
+        * { box-sizing: border-box; }
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            margin: 0;
+            background: var(--page-bg);
+            color: var(--ink);
+            font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+            line-height: 1.5;
         }
-        .container {
-            display: inline-block;
-            text-align: left;
-            margin-top: 30px;
-            padding: 20px;
-            border: 1px solid #ccc;
+        .skip-link {
+            position: absolute;
+            left: 1rem;
+            top: -4rem;
+            z-index: 10;
+            padding: .6rem 1rem;
+            background: var(--ink);
+            color: #fff;
+            border-radius: 8px;
+            transition: top .15s ease-in-out;
+        }
+        .skip-link:focus { top: 1rem; }
+        .page {
+            width: min(1120px, calc(100% - 2rem));
+            margin: 0 auto;
+            padding: 1.75rem 0 3rem;
+        }
+        .site-header { margin: .25rem 0 1.25rem; }
+        .brand { display: flex; align-items: flex-start; gap: .9rem; }
+        .brand-mark {
+            flex: 0 0 auto;
+            width: 52px;
+            height: 52px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #fff;
+            display: grid;
+            place-items: center;
+        }
+        .eyebrow {
+            margin: 0 0 .2rem;
+            color: var(--muted);
+            font-size: .8rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        h1 {
+            margin: 0;
+            font-size: clamp(1.65rem, 3.4vw, 2.25rem);
+            line-height: 1.15;
+        }
+        .subtitle { margin: .45rem 0 0; color: var(--muted); max-width: 62ch; }
+        .trust-note {
+            margin: .9rem 0 0;
+            padding: .65rem .8rem;
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            background: #fff;
+            color: var(--muted);
+            font-size: .92rem;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: 0 8px 22px rgba(31, 41, 55, .08);
+            padding: 1.5rem;
+        }
+        .card > h2 { margin: 0; font-size: 1.25rem; }
+        .card-lead { margin: .4rem 0 1.2rem; color: var(--muted); }
+        form { margin: 0; }
+        fieldset {
+            margin: 0 0 1.25rem;
+            padding: 1rem 1rem 1.15rem;
+            border: 1px solid var(--line);
             border-radius: 10px;
+            background: #fbfcfe;
         }
-        label, select, input {
+        legend {
+            padding: 0 .5rem;
+            font-weight: 700;
+            font-size: .95rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .8rem 1rem;
+        }
+        .field { min-width: 0; }
+        label {
             display: block;
-            margin-bottom: 10px;
-            width: 100%;
+            margin-bottom: .35rem;
+            font-weight: 600;
+            font-size: .92rem;
         }
-        .center {
+        select, input[type="text"] {
+            display: block;
+            width: 100%;
+            min-height: 44px;
+            padding: .55rem .65rem;
+            border: 1px solid #b9c2cd;
+            border-radius: 8px;
+            background: #fff;
+            color: inherit;
+            font: inherit;
+        }
+        select:focus-visible, input:focus-visible, a:focus-visible {
+            outline: 3px solid var(--focus);
+            outline-offset: 2px;
+        }
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: .8rem;
+            margin-top: .25rem;
+        }
+        .button {
+            display: inline-block;
+            min-height: 48px;
+            padding: .7rem 1.2rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            font: inherit;
+            font-weight: 700;
             text-align: center;
-            margin-top: 30px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .button-primary {
+            width: 100%;
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            font-size: 1.05rem;
+        }
+        .button-primary:hover { background: var(--accent-dark); }
+        .button-secondary {
+            border-color: var(--line);
+            background: #fff;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+        .button-secondary:hover { background: #f3f5f8; }
+        .center { text-align: center; margin-top: 1.5rem; }
+        .result-panel, .alert {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 1.2rem 1.3rem;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: #fff;
+            box-shadow: 0 6px 18px rgba(31, 41, 55, .07);
+        }
+        .result-panel h2, .alert h2 { margin: 0 0 .35rem; }
+        .result-price { margin: 0; font-size: 2rem; font-weight: 800; }
+        .result-note { margin: .55rem 0 0; color: var(--muted); font-size: .92rem; }
+        .alert {
+            border-color: #f0b4bd;
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+        .alert p { margin: .25rem 0 0; color: inherit; }
+        .page-footer { margin-top: 1.75rem; color: var(--muted); font-size: .88rem; text-align: center; }
+        @media (min-width: 1000px) {
+            .card { padding: 2rem 2rem 1.75rem; }
+            .grid { gap: 1rem 1.25rem; }
+            fieldset { padding: 1.15rem 1.25rem 1.3rem; }
+        }
+        @media (max-width: 720px) {
+            .card { padding: 1.1rem; }
+            .grid { grid-template-columns: 1fr; }
+            .actions { grid-template-columns: 1fr; }
+            .brand { align-items: center; }
         }
     </style>
 </head>
 <body>
-    <h1>Laptop Price Predictor</h1>
-    <div class="container">
-        <form method="POST">
-            <label>Company:</label>
-            <select name="company">
-                {% for c in companies %}
-                <option value="{{ c }}" {% if request.form.company == c %}selected{% endif %}>{{ c }}</option>
-                {% endfor %}
-            </select>
-
-            <label>Type:</label>
-            <select name="typename">
-                {% for t in typenames %}
-                <option value="{{ t }}" {% if request.form.typename == t %}selected{% endif %}>{{ t }}</option>
-                {% endfor %}
-            </select>
-
-            <label>Inches:</label>
-            <input type="text" name="inches" value="{{ request.form.inches or '' }}">
-
-            <label>Touchscreen:</label>
-            <select name="touchscreen">
-                <option value="Yes" {% if request.form.touchscreen == 'Yes' %}selected{% endif %}>Yes</option>
-                <option value="No" {% if request.form.touchscreen == 'No' %}selected{% endif %}>No</option>
-            </select>
-
-            <label>IPS:</label>
-            <select name="ips">
-                <option value="Yes" {% if request.form.ips == 'Yes' %}selected{% endif %}>Yes</option>
-                <option value="No" {% if request.form.ips == 'No' %}selected{% endif %}>No</option>
-            </select>
-
-            <label>Resolution:</label>
-            <input type="text" name="resolution" value="{{ request.form.resolution or '' }}">
-
-            <label>CPU:</label>
-            <select name="cpu">
-                {% for c in cpus %}
-                <option value="{{ c }}" {% if request.form.cpu == c %}selected{% endif %}>{{ c }}</option>
-                {% endfor %}
-            </select>
-
-            <label>RAM (GB):</label>
-            <select name="ram">
-                {% for r in rams %}
-                <option value="{{ r }}" {% if request.form.ram == r %}selected{% endif %}>{{ r }}</option>
-                {% endfor %}
-            </select>
-
-            <label>GPU:</label>
-            <select name="gpu">
-                {% for g in gpus %}
-                <option value="{{ g }}" {% if request.form.gpu == g %}selected{% endif %}>{{ g }}</option>
-                {% endfor %}
-            </select>
-
-            <label>OS:</label>
-            <select name="os">
-                {% for o in oses %}
-                <option value="{{ o }}" {% if request.form.os == o %}selected{% endif %}>{{ o }}</option>
-                {% endfor %}
-            </select>
-
-            <label>Weight:</label>
-            <input type="text" name="weight" value="{{ request.form.weight or '' }}">
-
-            <label>HDD (GB):</label>
-            <select name="hdd">
-                {% for s in storages %}
-                <option value="{{ s }}" {% if request.form.hdd == s %}selected{% endif %}>{{ s }}</option>
-                {% endfor %}
-            </select>
-
-            <label>SSD (GB):</label>
-            <select name="ssd">
-                {% for s in storages %}
-                <option value="{{ s }}" {% if request.form.ssd == s %}selected{% endif %}>{{ s }}</option>
-                {% endfor %}
-            </select>
-
-            <label><input type="checkbox" name="hybrid" {% if request.form.hybrid %}checked{% endif %}> Hybrid</label>
-            <label><input type="checkbox" name="flash" {% if request.form.flash %}checked{% endif %}> Flash Storage</label>
-
-            <div style="margin-top: 10px;">
-                <input type="submit" value="Predict">
-                <a href="/" style="text-decoration: none;">
-                    <button type="button">Clear</button>
-                </a>
+    <a class="skip-link" href="#prediction-form">Skip to prediction form</a>
+    <div class="page">
+        <header class="site-header">
+            <div class="brand">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg width="30" height="30" viewBox="0 0 32 32" fill="none" role="img" aria-hidden="true">
+                        <rect x="6" y="7" width="20" height="13" rx="2" fill="#1d4ed8"/>
+                        <rect x="8.5" y="9.5" width="15" height="8" rx="1" fill="#dbeafe"/>
+                        <path d="M3 24h26l-2.4 3.2a1 1 0 0 1-.8.4H6.2a1 1 0 0 1-.8-.4L3 24z" fill="#1f2937"/>
+                    </svg>
+                </span>
+                <div>
+                    <p class="eyebrow">Machine learning price estimator</p>
+                    <h1>Laptop Price Intelligence</h1>
+                    <p class="subtitle">Enter a laptop's specifications to estimate its price from patterns learned across 1,274 historical laptop listings.</p>
+                </div>
             </div>
-        </form>
-    </div>
+            <p class="trust-note"><strong>Historical-data estimate:</strong> predictions reflect past listing prices used for training, not guaranteed current market prices.</p>
+        </header>
 
-    {% if prediction %}
-    <div class="center">
-        <h2>Predicted Price: ₹{{ prediction }}</h2>
+        <main>
+            <div class="card">
+                <h2>Estimate a laptop price</h2>
+                <p class="card-lead">Complete the specification groups below, then choose Predict. All fields are required.</p>
+                <p class="card-lead" style="margin-top:-.8rem;">Starting values are placeholders only, not a recommendation or a verified real device; adjust them to match your configuration.</p>
+                <form method="POST" id="prediction-form">
+                    <fieldset>
+                        <legend>A. Laptop Overview</legend>
+                        <div class="grid">
+                            <div class="field">
+                                <label for="company">Company:</label>
+                                <select id="company" name="company">
+                                    {% for c in companies %}
+                                    <option value="{{ c }}" {% if request.form.company == c or (not request.form.company and c == 'Dell') %}selected{% endif %}>{{ c }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="typename">Type:</label>
+                                <select id="typename" name="typename">
+                                    {% for t in typenames %}
+                                    <option value="{{ t }}" {% if request.form.typename == t or (not request.form.typename and t == 'Notebook') %}selected{% endif %}>{{ t }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="os">Operating System:</label>
+                                <select id="os" name="os">
+                                    {% for o in oses %}
+                                    <option value="{{ o }}" {% if request.form.os == o or (not request.form.os and o == 'Windows 10') %}selected{% endif %}>{{ o }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+            <fieldset>
+                        <legend>B. Performance</legend>
+                        <div class="grid">
+                            <div class="field">
+                                <label for="cpu">CPU (includes clock speed):</label>
+                                <select id="cpu" name="cpu">
+                                    {% for c in cpus %}
+                                    <option value="{{ c }}" {% if request.form.cpu == c or (not request.form.cpu and c == 'Intel Core i5 8250U 1.6GHz') %}selected{% endif %}>{{ c }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="ram">RAM (GB):</label>
+                                <select id="ram" name="ram">
+                                    {% for r in rams %}
+                                    <option value="{{ r }}" {% if request.form.ram == r or (not request.form.ram and r == '8') %}selected{% endif %}>{{ r }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="gpu">GPU:</label>
+                                <select id="gpu" name="gpu">
+                                    {% for g in gpus %}
+                                    <option value="{{ g }}" {% if request.form.gpu == g or (not request.form.gpu and g == 'Intel HD Graphics 620') %}selected{% endif %}>{{ g }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>C. Display &amp; Build</legend>
+                        <div class="grid">
+                            <div class="field">
+                                <label for="inches">Screen Size (inches):</label>
+                                <input type="text" id="inches" name="inches" inputmode="decimal" autocomplete="off" placeholder="e.g. 15.6" value="{{ request.form.inches or '' }}">
+                            </div>
+                            <div class="field">
+                                <label for="resolution">Resolution:</label>
+                                <input type="text" id="resolution" name="resolution" inputmode="numeric" autocomplete="off" placeholder="e.g. 1920x1080" value="{{ request.form.resolution or '' }}">
+                            </div>
+                            <div class="field">
+                                <label for="touchscreen">Touchscreen:</label>
+                                <select id="touchscreen" name="touchscreen">
+                                    <option value="Yes" {% if request.form.touchscreen == 'Yes' %}selected{% endif %}>Yes</option>
+                                    <option value="No" {% if request.form.touchscreen == 'No' or not request.form.touchscreen %}selected{% endif %}>No</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="ips">IPS:</label>
+                                <select id="ips" name="ips">
+                                    <option value="Yes" {% if request.form.ips == 'Yes' %}selected{% endif %}>Yes</option>
+                                    <option value="No" {% if request.form.ips == 'No' or not request.form.ips %}selected{% endif %}>No</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="weight">Weight (kg):</label>
+                                <input type="text" id="weight" name="weight" inputmode="decimal" autocomplete="off" placeholder="e.g. 1.86" value="{{ request.form.weight or '' }}">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>D. Storage</legend>
+                        <div class="grid">
+                            <div class="field">
+                                <label for="hdd">HDD (GB):</label>
+                                <select id="hdd" name="hdd">
+                                    {% for s in storages %}
+                                    <option value="{{ s }}" {% if request.form.hdd == s or (not request.form.hdd and s == '0') %}selected{% endif %}>{{ s }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="ssd">SSD (GB):</label>
+                                <select id="ssd" name="ssd">
+                                    {% for s in storages %}
+                                    <option value="{{ s }}" {% if request.form.ssd == s or (not request.form.ssd and s == '0') %}selected{% endif %}>{{ s }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="flash_gb">Flash Storage (GB):</label>
+                                <select id="flash_gb" name="flash_gb">
+                                    {% for s in storages %}
+                                    <option value="{{ s }}" {% if request.form.flash_gb == s or (not request.form.flash_gb and s == '0') %}selected{% endif %}>{{ s }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="hybrid_gb">Hybrid (GB):</label>
+                                <select id="hybrid_gb" name="hybrid_gb">
+                                    {% for s in storages %}
+                                    <option value="{{ s }}" {% if request.form.hybrid_gb == s or (not request.form.hybrid_gb and s == '0') %}selected{% endif %}>{{ s }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="actions">
+                        <input class="button button-primary" type="submit" value="Predict price">
+                        <a class="button button-secondary" href="/">Clear</a>
+                    </div>
+                </form>
+            </div>
+
+            {% if prediction %}
+            <div class="center">
+                {% if prediction is string and prediction[:6] == 'Error:' %}
+                <div class="alert" role="alert">
+                    <h2>We could not make a prediction</h2>
+                    <p>{{ prediction }}</p>
+                </div>
+                {% else %}
+                <div class="result-panel" role="status" aria-live="polite">
+                    <h2>Predicted Price</h2>
+                    <p class="result-price">₹{{ prediction }}</p>
+                    <p class="result-note">Estimate based on historical training data; not a guaranteed current market price.</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </main>
+
+        <footer class="page-footer">
+            <p>Laptop Price Intelligence &middot; estimates come from 1,274 historical listings and may differ from current market prices.</p>
+        </footer>
     </div>
-    {% endif %}
 </body>
 </html>
