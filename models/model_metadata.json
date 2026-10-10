@@ -1,0 +1,87 @@
+{
+  "model_name": "Pipeline(preprocess + GradientBoosting)",
+  "estimator": "GradientBoosting",
+  "training_date_utc": "2026-10-08T17:43:26+00:00",
+  "dataset": "laptop_data.csv",
+  "dataset_rows_raw": 1303,
+  "dataset_rows_after_cleaning": 1274,
+  "train_rows": 1019,
+  "test_rows": 255,
+  "features": [
+    "Company",
+    "TypeName",
+    "OpSys",
+    "CPU_Brand",
+    "CPU_Tier",
+    "GPU_Brand",
+    "GPU_Series",
+    "Inches",
+    "RAM_GB",
+    "Weight_kg",
+    "Resolution_X",
+    "Resolution_Y",
+    "Touchscreen",
+    "IPS",
+    "Pixels",
+    "PPI",
+    "CPU_Freq_GHz",
+    "SSD_GB",
+    "HDD_GB",
+    "Flash_GB",
+    "Hybrid_GB"
+  ],
+  "categorical_features": [
+    "Company",
+    "TypeName",
+    "OpSys",
+    "CPU_Brand",
+    "CPU_Tier",
+    "GPU_Brand",
+    "GPU_Series"
+  ],
+  "numeric_features": [
+    "Inches",
+    "RAM_GB",
+    "Weight_kg",
+    "Resolution_X",
+    "Resolution_Y",
+    "Touchscreen",
+    "IPS",
+    "Pixels",
+    "PPI",
+    "CPU_Freq_GHz",
+    "SSD_GB",
+    "HDD_GB",
+    "Flash_GB",
+    "Hybrid_GB"
+  ],
+  "target": "Price",
+  "target_transformation": "log1p",
+  "random_state": 42,
+  "test_size": 0.2,
+  "cv": {
+    "scheme": "5-fold KFold(shuffle=True, random_state=42)",
+    "selection_metric": "MAE (rupee scale)",
+    "MAE": 9153.76,
+    "RMSE": 14294.68,
+    "R2": 0.8432,
+    "MAPE_pct": 15.11
+  },
+  "test_metrics": {
+    "MAE": 11262.9635,
+    "RMSE": 20699.6896,
+    "R2": 0.75,
+    "MAPE_%": 16.1934
+  },
+  "best_params": {
+    "model__learning_rate": 0.1,
+    "model__max_depth": 3,
+    "model__n_estimators": 500
+  },
+  "versions": {
+    "python": "3.12.7",
+    "pandas": "2.2.2",
+    "numpy": "1.26.4",
+    "scikit_learn": "1.8.0"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "note": "Historical listings only; not current-market prices. Descriptive test analysis; no tuning on test data.",
+  "dataset": "laptop_data.csv",
+  "rows_raw": 1303,
+  "rows_clean": 1274,
+  "train_rows": 1019,
+  "test_rows": 255,
+  "split": "train_test_split(test_size=0.20, random_state=42)",
+  "target_transformation": "log1p -> expm1 to rupees, clip>=0",
+  "metrics_rupees": {
+    "n": 255,
+    "MAE": 11262.963541622361,
+    "RMSE": 20699.689631546677,
+    "R2": 0.7499656114239055,
+    "MAPE_pct": 16.193384983675625,
+    "MedAPE_pct": 10.542557291367762,
+    "within_10_pct": 47.05882352941176,
+    "within_20_pct": 75.29411764705883,
+    "within_30_pct": 87.45098039215686
+  },
+  "stored_test_metrics": {
+    "MAE": 11262.9635,
+    "RMSE": 20699.6896,
+    "R2": 0.75,
+    "MAPE_%": 16.1934
+  },
+  "comparison_abs_diff": {
+    "MAE": 4.1622361095505767e-05,
+    "RMSE": 3.1546675018034875e-05,
+    "R2": 3.4388576094501744e-05,
+    "MAPE_pct": 1.5016324375949353e-05
+  },
+  "small_group_threshold": 10,
+  "model_sha256_before": "9202717561239706baeb3575417ae5323fd014d71b0ceb0805bf32cb84bf4d72",
+  "model_sha256_after": "9202717561239706baeb3575417ae5323fd014d71b0ceb0805bf32cb84bf4d72",
+  "outputs": [
+    "actual_vs_predicted.png",
+    "largest_10_errors.csv",
+    "metrics_by_brand.csv",
+    "metrics_by_price_band.csv",
+    "metrics_by_type.csv",
+    "residual_distribution.png",
+    "residuals_vs_predicted.png",
+    "summary.json",
+    "test_predictions.csv"
+  ]
+}

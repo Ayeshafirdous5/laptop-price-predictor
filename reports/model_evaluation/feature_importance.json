@@ -1,0 +1,325 @@
+{
+  "title": "Feature importance report (read-only audit)",
+  "summary": {
+    "note": "Historical laptop listings, not verified current-market prices. Importance is predictive association, not causation.",
+    "train_rows": 1019,
+    "test_rows": 255,
+    "split": "train_test_split(test_size=0.20, random_state=42)",
+    "target_transformation": "log1p -> expm1 to rupees, clip>=0",
+    "model": "Pipeline(preprocess + GradientBoostingRegressor)",
+    "model_sha256": "9202717561239706baeb3575417ae5323fd014d71b0ceb0805bf32cb84bf4d72"
+  },
+  "split_details": {
+    "test_size": 0.2,
+    "random_state": 42,
+    "train_rows": 1019,
+    "test_rows": 255
+  },
+  "impurity_importance": {
+    "metric": "impurity-based tree importance (mean decrease in MSE)",
+    "unit": "unitless; normalized to sum=1 over the 74 transformed columns",
+    "aggregation_method": "sum over one-hot levels per original feature, via fitted ColumnTransformer positional mapping",
+    "features": [
+      {
+        "feature": "RAM_GB",
+        "importance": 0.462862,
+        "unit": "RAM in GB",
+        "derived": false
+      },
+      {
+        "feature": "SSD_GB",
+        "importance": 0.111157,
+        "unit": "SSD capacity in GB",
+        "derived": false
+      },
+      {
+        "feature": "CPU_Tier",
+        "importance": 0.100538,
+        "unit": "CPU family tier",
+        "derived": false
+      },
+      {
+        "feature": "TypeName",
+        "importance": 0.069285,
+        "unit": "Laptop type (e.g. Gaming)",
+        "derived": false
+      },
+      {
+        "feature": "CPU_Freq_GHz",
+        "importance": 0.064456,
+        "unit": "CPU clock frequency in GHz",
+        "derived": false
+      },
+      {
+        "feature": "Weight_kg",
+        "importance": 0.058427,
+        "unit": "Weight in kg",
+        "derived": false
+      },
+      {
+        "feature": "PPI",
+        "importance": 0.042988,
+        "unit": "Pixels per inch (derived from resolution + inches)",
+        "derived": true
+      },
+      {
+        "feature": "OpSys",
+        "importance": 0.020114,
+        "unit": "Operating system",
+        "derived": false
+      },
+      {
+        "feature": "Inches",
+        "importance": 0.019129,
+        "unit": "Screen size in inches",
+        "derived": false
+      },
+      {
+        "feature": "Company",
+        "importance": 0.017138,
+        "unit": "Laptop manufacturer",
+        "derived": false
+      },
+      {
+        "feature": "GPU_Series",
+        "importance": 0.011137,
+        "unit": "GPU series",
+        "derived": false
+      },
+      {
+        "feature": "Pixels",
+        "importance": 0.005131,
+        "unit": "Total pixels (derived: X*Y)",
+        "derived": true
+      },
+      {
+        "feature": "IPS",
+        "importance": 0.003981,
+        "unit": "1 if IPS panel, else 0",
+        "derived": false
+      },
+      {
+        "feature": "GPU_Brand",
+        "importance": 0.003371,
+        "unit": "GPU manufacturer",
+        "derived": false
+      },
+      {
+        "feature": "HDD_GB",
+        "importance": 0.003157,
+        "unit": "HDD capacity in GB",
+        "derived": false
+      },
+      {
+        "feature": "Resolution_X",
+        "importance": 0.00273,
+        "unit": "Horizontal resolution (px)",
+        "derived": false
+      },
+      {
+        "feature": "Touchscreen",
+        "importance": 0.001838,
+        "unit": "1 if screen is touch, else 0",
+        "derived": false
+      },
+      {
+        "feature": "CPU_Brand",
+        "importance": 0.000904,
+        "unit": "CPU manufacturer tier",
+        "derived": false
+      },
+      {
+        "feature": "Resolution_Y",
+        "importance": 0.00083,
+        "unit": "Vertical resolution (px)",
+        "derived": false
+      },
+      {
+        "feature": "Flash_GB",
+        "importance": 0.000783,
+        "unit": "Flash capacity in GB",
+        "derived": false
+      },
+      {
+        "feature": "Hybrid_GB",
+        "importance": 4.6e-05,
+        "unit": "Hybrid capacity in GB",
+        "derived": false
+      }
+    ]
+  },
+  "permutation_importance": {
+    "metric": "permutation importance: held-out rupee MAE increase",
+    "units": "Indian Rupees (INR)",
+    "scorer": "mae_in_rupees (expm1 only on predictions; y_true raw)",
+    "greater_is_better": false,
+    "n_repeats": 10,
+    "random_state": 42,
+    "aggregation_method": "mean +/- std across repeats, per original feature",
+    "features": [
+      {
+        "feature": "RAM_GB",
+        "importance_mean": 5337.39,
+        "importance_std": 777.44,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "SSD_GB",
+        "importance_mean": 2872.86,
+        "importance_std": 584.3,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "CPU_Tier",
+        "importance_mean": 2592.44,
+        "importance_std": 659.42,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "CPU_Freq_GHz",
+        "importance_mean": 2230.25,
+        "importance_std": 455.53,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "Weight_kg",
+        "importance_mean": 2141.05,
+        "importance_std": 355.59,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "OpSys",
+        "importance_mean": 1331.49,
+        "importance_std": 261.02,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "GPU_Series",
+        "importance_mean": 1059.71,
+        "importance_std": 234.88,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "Inches",
+        "importance_mean": 976.51,
+        "importance_std": 299.59,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "Company",
+        "importance_mean": 940.91,
+        "importance_std": 282.22,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "TypeName",
+        "importance_mean": 729.63,
+        "importance_std": 313.28,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "HDD_GB",
+        "importance_mean": 641.59,
+        "importance_std": 179.34,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "PPI",
+        "importance_mean": 379.71,
+        "importance_std": 306.41,
+        "unit": "INR",
+        "derived": true
+      },
+      {
+        "feature": "IPS",
+        "importance_mean": 231.0,
+        "importance_std": 114.36,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "GPU_Brand",
+        "importance_mean": 130.96,
+        "importance_std": 78.89,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "Touchscreen",
+        "importance_mean": 97.48,
+        "importance_std": 76.92,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "Pixels",
+        "importance_mean": 66.99,
+        "importance_std": 64.97,
+        "unit": "INR",
+        "derived": true
+      },
+      {
+        "feature": "CPU_Brand",
+        "importance_mean": 6.28,
+        "importance_std": 8.09,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "Hybrid_GB",
+        "importance_mean": -3.71,
+        "importance_std": 28.04,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "Flash_GB",
+        "importance_mean": -21.53,
+        "importance_std": 44.0,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "Resolution_X",
+        "importance_mean": -45.3,
+        "importance_std": 46.85,
+        "unit": "INR",
+        "derived": false
+      },
+      {
+        "feature": "Resolution_Y",
+        "importance_mean": -73.11,
+        "importance_std": 21.48,
+        "unit": "INR",
+        "derived": false
+      }
+    ]
+  },
+  "derived_flags": {
+    "Pixels": "Total pixels = Resolution_X * Resolution_Y; an exact function of resolution and therefore carries no independent information beyond the split into the two resolution dimensions.",
+    "PPI": "Pixels per inch = hypot(Resolution_X, Resolution_Y) / Inches; an exact function of screen size and resolution, so it carries no independent information.",
+    "guidance": "Both derived columns are flagged so that readers do not attribute causal effect to them; correlated features share importance structurally."
+  },
+  "limitations": [
+    "Global (population-level) importance. It does not explain individual laptops; per-row attribution would require a local method (e.g. SHAP TreeExplainer) at inference time.",
+    "Impurity importance is in-sample, biased toward continuous/high-cardinality features, and shares importance structurally among correlated features (e.g. Pixels/PPI/Resolution_X/Y).",
+    "Permutation importance measures held-out metric degradation when a feature is shuffled; it reflects association used by the model, not causal effect.",
+    "Data are historical listings; prices may differ from the current market."
+  ],
+  "versions": {
+    "python": "3.12.7",
+    "pandas": "2.2.2",
+    "sklearn": "1.8.0"
+  }
+}
