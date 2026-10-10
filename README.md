@@ -188,4 +188,6 @@ Treat the output as an informative historical-data estimate for learning and por
 
 ## Contact
 
+**Ayesha Firdous** — Computer Science Engineering Student
+
 For queries or feedback: ayeshafirdous0509@gmail.com
