@@ -28,6 +28,14 @@ All verified in `app.py` and `templates/index.html`:
 - **Rupee predictions** obtained by inverting the training target (`expm1` of the log-space prediction), with guards against non-finite or non-positive outputs. Prices are rounded to whole rupees.
 - **Clear button** that resets the form, and preserved form values after a failed submission.
 
+## Application Screenshots
+
+### Main Interface
+![Laptop Price Intelligence Main Interface](docs/screenshots/01-main-interface.png)
+
+### Prediction Result
+![Laptop Price Prediction Result](docs/screenshots/02-prediction-result.png)
+
 ## Technology stack
 
 | Layer | Technology |
